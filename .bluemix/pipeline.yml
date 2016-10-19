@@ -49,7 +49,7 @@ stages:
       application: EmployeeAkkaHttpMicroService
     script: |
       #!/bin/bash
-      cf push "${CF_APP}" -p EmployeeCouchAkkaService-1.0-SNAPSHOT-bin.zip -m 512M --no-start
+      cf push "${CF_APP}" -p EmployeeCouchAkkaService-1.0-SNAPSHOT-bin.zip -m 512M --randon-route --no-start
       cf bind-service "${CF_APP}" "Cloudant NoSQL DB-gs"
       cf start "${CF_APP}"
 - name: CBridgeCFDeploy
