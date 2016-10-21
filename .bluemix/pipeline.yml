@@ -139,7 +139,7 @@ stages:
     value: tiny
     type: text
   - name: CONCURRENT_VERSIONS
-    value: '0'
+    value: '1'
     type: text
   - name: ROUTE_HOSTNAME
     value: ${CF_APP}
