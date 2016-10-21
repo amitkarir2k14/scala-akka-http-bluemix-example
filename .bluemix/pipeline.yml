@@ -120,7 +120,7 @@ stages:
       # Copy any artifacts that will be needed for deployment and testing to $WORKSPACE\
       \    #\n######################################################################################\n\
       echo \"IMAGE_NAME=${FULL_REPOSITORY_NAME}\" >> $ARCHIVE_DIR/build.properties"
-- name: DeploySingleContainer
+- name: DeployContainerGroup
   inputs:
   - type: job
     stage: BuildDockerImage
@@ -133,6 +133,12 @@ stages:
     type: text
   - name: CONTAINER_SIZE
     value: tiny
+    type: text
+  - name: CONCURRENT_VERSIONS
+    value: '0'
+    type: text
+  - name: ROUTE_HOSTNAME
+    value: ${CF_APP}
     type: text
   jobs:
   - name: Containerize
@@ -166,7 +172,7 @@ stages:
       \                                                  large (4096), x-large (8192),\
       \ 2x-large (16384).\n#                                    Default is micro (256).\n\
       #   CONCURRENT_VERSIONS Number       Number of versions of this container to\
-      \ leave active.  \n#                                    Default is 1\n#\n/bin/bash\
+      \ leave active.  \n#                                    Default is 1\n#\n#/bin/bash\
       \ deployscripts/deploycontainer.sh\n\n# Deploy Container Group:\n# Optional\
       \ environment properties (can be set directly in this script, or defined as\
       \ environment properties):\n#      NAME              Value         Description\n\
@@ -188,7 +194,7 @@ stages:
       \ Number       Number of versions of this group to leave active.\n#        \
       \                            Default is 1\n# IF YOU WANT CONTAINER GROUPS ..\
       \ uncomment the next line, and comment out the previous deployment line (/bin/bash\
-      \ deployscripts/deploygroup.sh)\n#/bin/bash deployscripts/deploygroup.sh\n\n\
+      \ deployscripts/deploygroup.sh)\n/bin/bash deployscripts/deploygroup.sh\n\n\
       RESULT=$?\n\n# source the deploy property file\nif [ -f \"${DEPLOY_PROPERTY_FILE}\"\
       \ ]; then\n  source \"$DEPLOY_PROPERTY_FILE\"\nfi\n\n#########################\n\
       # Environment DETAILS   #\n#########################\n# The environment has\
