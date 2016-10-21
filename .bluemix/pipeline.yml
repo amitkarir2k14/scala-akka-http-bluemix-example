@@ -78,6 +78,10 @@ stages:
     job: BuildArtifacts
   triggers:
   - type: stage
+  properties:
+  - name: IMAGE_LIMIT
+    value: '2'
+    type: text
   jobs:
   - name: BuildImage
     type: builder
